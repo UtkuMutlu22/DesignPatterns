@@ -10,26 +10,20 @@ namespace FactoryMethod
             customerManager.Save();
         }
     }
+    
     public class LoggerFactory:ILoggerFactory
     {
         public ILogger CreateLogger()
         {
             return new EdLogger();
         }
+
     }
-    public class LoggerFactory2 : ILoggerFactory
+    public class LoggerFactory2:ILoggerFactory
     {
         public ILogger CreateLogger()
         {
-            return new Log4NetLogger();
-        }
-    }
-
-    internal class Log4NetLogger : ILogger
-    {
-        public void Log()
-        {
-            Console.WriteLine("Loggin log4net");
+            return new LogForNetLogger();
         }
     }
 
@@ -46,7 +40,14 @@ namespace FactoryMethod
     {
         public void Log()
         {
-            Console.WriteLine("logged");
+            Console.WriteLine("Logged with Edlogger");
+        }
+    }
+    public class LogForNetLogger : ILogger
+    {
+        public void Log()
+        {
+            Console.WriteLine("Logged with LogForNet");
         }
     }
     public class CustomerManager
@@ -60,7 +61,7 @@ namespace FactoryMethod
 
         public void Save()
         {
-            Console.WriteLine("Saved");
+            Console.WriteLine("saved");
             ILogger logger = _loggerFactory.CreateLogger();
             logger.Log();
         }

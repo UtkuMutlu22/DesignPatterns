@@ -6,13 +6,14 @@ namespace Singleton
     {
         static void Main(string[] args)
         {
-           var customerManager= CustomerManager.CreateAsSingleton();
+            var customerManager=CustomerManager.CreateAsSingleton();
             customerManager.Save();
+           
         }
     }
-    class CustomerManager
+    public class CustomerManager
     {
-        static CustomerManager _customerManager;
+        private static CustomerManager _customerManager;
         static object _lockObject = new object();
         private CustomerManager()
         {
@@ -29,6 +30,7 @@ namespace Singleton
             }
             return _customerManager;
         }
+
         public  void Save()
         {
             Console.WriteLine("Saved");
