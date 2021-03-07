@@ -10,10 +10,9 @@ namespace Adapter
             productManager.Save();
         }
     }
-
     class ProductManager
     {
-        private ILogger _logger;
+        ILogger _logger;
 
         public ProductManager(ILogger logger)
         {
@@ -22,8 +21,8 @@ namespace Adapter
 
         public void Save()
         {
-           _logger.Log("Logged user data");
-            Console.WriteLine("Saved");
+            _logger.Log("user data");
+            Console.WriteLine("saved");
         }
     }
     interface ILogger
@@ -34,14 +33,14 @@ namespace Adapter
     {
         public void Log(string message)
         {
-            Console.WriteLine("Logged,{0}",message);
+            Console.WriteLine("Logged, {0}", message);
         }
     }
     class Log4Net
     {
         public void LogMessage(string message)
         {
-            Console.WriteLine("Logged with Log4Net {0}",message);
+            Console.WriteLine("Logged with Log4Net, {0}",message);
         }
     }
     class Log4NetAdapter : ILogger
@@ -52,4 +51,5 @@ namespace Adapter
             log4Net.LogMessage(message);
         }
     }
+
 }

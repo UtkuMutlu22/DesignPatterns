@@ -10,33 +10,19 @@ namespace Facade
             customerManager.Save();
         }
     }
-
-    class Logging:ILogging
+    class Logging:ILogger
     {
         public void Log()
         {
-            Console.WriteLine("logged");
-        }
-    }
-    class Validation : IValidate
-    {
-        public void Validete()
-        {
-            Console.WriteLine("Validate");
+            Console.WriteLine("Logged");
         }
     }
 
-    interface IValidate
-    {
-        void Validete();
-    }
-
-    interface ILogging
+    interface ILogger
     {
         void Log();
     }
-
-    class Caching:ICaching
+    class Caching : ICaching
     {
         public void Cache()
         {
@@ -44,27 +30,36 @@ namespace Facade
         }
     }
 
-     interface ICaching
+    interface ICaching
     {
         void Cache();
     }
-
-    class Authorize:IAuthorize
+    class Authorize : IAuthorize
     {
         public void CheckUser()
         {
-            Console.WriteLine("user chcecked");
+            Console.WriteLine("Checed user");
         }
     }
-
     interface IAuthorize
     {
         void CheckUser();
     }
+    class Validate : IValidate
+    {
+        public void Validation()
+        {
+            Console.WriteLine("Validated");
+        }
+    }
+    interface IValidate
+    {
+        void Validation();
+    }
     class CustomerManager
     {
 
-        CrossCuttingConcernsFacade _concerns;
+        private CrossCuttingConcernsFacade _concerns;
         public CustomerManager()
         {
             _concerns = new CrossCuttingConcernsFacade();
@@ -72,25 +67,25 @@ namespace Facade
         public void Save()
         {
             _concerns.Caching.Cache();
-            _concerns.Authorize.CheckUser();
             _concerns.Logging.Log();
-            _concerns.Validate.Validete();
-            Console.WriteLine("saved");
+            _concerns.Authorize.CheckUser();
+            _concerns.Validate.Validation();
+            Console.WriteLine("Saved");
         }
-        class CrossCuttingConcernsFacade
-        {
-            public ILogging Logging;
-            public ICaching Caching;
-            public IAuthorize Authorize;
-            public IValidate Validate;
+    }
+    class CrossCuttingConcernsFacade
+    {
+        public ILogger Logging;
+        public ICaching Caching;
+        public IAuthorize Authorize;
+        public IValidate Validate;
 
-            public CrossCuttingConcernsFacade()
-            {
-                Logging = new Logging();
-                Caching = new Caching();
-                Authorize = new Authorize();
-                Validate = new Validation();
-            }
+        public CrossCuttingConcernsFacade()
+        {
+            Logging = new Logging();
+            Caching = new Caching();
+            Authorize = new Authorize();
+            Validate = new Validate();
         }
     }
 }

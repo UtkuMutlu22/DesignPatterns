@@ -8,45 +8,40 @@ namespace Composite
     {
         static void Main(string[] args)
         {
-            Employee utku = new Employee { Name="Utku Mutlu"};
+            Employee utku = new Employee { Name = "Utku Mutlu" };
             Employee arzu = new Employee { Name = "Arzu Mutlu" };
-            utku.AddSubOrdinate(arzu);
             Employee fuat = new Employee { Name = "Fuat Mutlu" };
+            Employee ahmet = new Employee { Name = "Ahmet" };
+            Employee mustafa = new Employee { Name = "Mustafa" };
+
+            utku.AddSubOrdinate(arzu);
             utku.AddSubOrdinate(fuat);
-            Employee ahmet = new Employee { Name = "Ahmet Mutlu" };
-            arzu.AddSubOrdinate(ahmet);
-
-            Contractor ali = new Contractor { Name = "Ali" };
-            fuat.AddSubOrdinate(ali);
-
-
+            fuat.AddSubOrdinate(ahmet);
+            utku.AddSubOrdinate(mustafa);
             Console.WriteLine(utku.Name);
             foreach (Employee manager in utku)
             {
                 Console.WriteLine("  {0}",manager.Name);
-
-                foreach (IPerson employee in manager)
+                foreach (Employee employee in manager)
                 {
-                    Console.WriteLine("     {0}", employee.Name);
+                    Console.WriteLine("    {0}",employee.Name);
                 }
             }
 
         }
     }
-
     interface IPerson
     {
-        string Name { get; set; }
+
+        public string Name { get; set; }
+
 
     }
-    class Contractor : IPerson
+    class Employee:IPerson,IEnumerable<IPerson>
     {
-        public string Name { get ; set ; }
-    }
-    class Employee : IPerson,IEnumerable<IPerson>
-    {
-        public string Name { get ; set ; }
+        public string Name { get; set; }
         List<IPerson> _subOrdinates = new List<IPerson>();
+        
         public void AddSubOrdinate(IPerson person)
         {
             _subOrdinates.Add(person);
@@ -55,25 +50,22 @@ namespace Composite
         {
             _subOrdinates.Remove(person);
         }
-        public IPerson GetSubOrdinate(int index)
-        {
-            return _subOrdinates[index];
-        }
+
+       
         public IEnumerator<IPerson> GetEnumerator()
         {
             foreach (var subOrdinate in _subOrdinates)
             {
                 yield return subOrdinate;
-
             }
         }
-
+        public IPerson GetSubOrdinate(int index)
+        {
+            return _subOrdinates[index];
+        }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
-
-
-
 }

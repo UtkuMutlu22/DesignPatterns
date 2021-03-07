@@ -12,14 +12,13 @@ namespace Proxy
             Console.WriteLine(manager.Calculate());
         }
     }
-    abstract class CreditBase 
+    abstract class CreditBase
     {
         public abstract int Calculate();
-    }
-    class CreditManager:CreditBase
-    {
-        
 
+    }
+    class CreditManager : CreditBase
+    {
         public override int Calculate()
         {
             int result = 1;
@@ -31,12 +30,10 @@ namespace Proxy
             return result;
         }
     }
-    class CreditManagerProxy : CreditBase
+    class CreditManagerProxy:CreditBase
     {
         CreditManager _creditManager;
         int _cacheValue;
-       
-
         public override int Calculate()
         {
             if (_creditManager==null)
